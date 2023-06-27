@@ -1,5 +1,5 @@
 # Conformal Prediction
-This is a framework for conformal prediction. It can be used to obtain reliable classification and regression results and also for simultaneous regression and classification. If you use our conformal prediction framework, SAURON-RF, or the code in this repository, please cite our paper.
+This is a framework for conformal prediction (CP), which we developed to perform reliable drug sensitivity prediction and prioritization. It can be used to obtain reliable classification and regression results, also for simultaneous regression and classification approaches.  If you use our conformal prediction framework, SAURON-RF, or the code in this repository, please cite our paper.
 
 
 ## Usage
