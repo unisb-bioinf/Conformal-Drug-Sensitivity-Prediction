@@ -383,7 +383,7 @@ def perform_conformal_prediction(json_dict: json.JSONDecoder):
 
     name_of_analysis = json_dict["analysis_name"]
 
-    output_directory = json_dict["output_dir"]
+    output_directory = json_dict["output_dir"] + "/"
 
     threshold_g = json_dict["threshold"]
     threshold = 0.0
