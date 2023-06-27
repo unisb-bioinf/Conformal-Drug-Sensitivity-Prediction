@@ -1,9 +1,10 @@
-import sys
-import json
-from multi_class_sauron_rf import SAURONRF
 import numpy as np
 import math
+import sys
 from conformal_prediction import *
+sys.path.append('../')
+from Advanced_SAURON_RF.multi_class_sauron_rf import SAURONRF
+import json
 
 
 def read_gene_expression_matrix(gene_expression_matrix_file: str) -> list:
