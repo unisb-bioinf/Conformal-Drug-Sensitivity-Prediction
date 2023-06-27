@@ -479,7 +479,7 @@ def perform_conformal_prediction(json_dict: json.JSONDecoder):
                                           output_variance_file_test=output_variance_file_test, leaf_assignment_file_test=leaf_assignment_file_test)
         y_pred_test_class1, y_pred_test_reg1 = predict(mult_sauron, X_cal=X_cal, y_cal=y_cal, class_assignment_samples_calibration=class_assignment_samples_calibration, samples_names_calibration=samples_names_calibration, class_function=class_function, num_classes=num_classes,
                                                        classes=classes, X_test=X_test, y_test=y_test, class_assignment_samples_test=class_assignment_samples_test, samples_names_test=samples_names_test, minimal_certainty=minimal_certainty, score=score)
-        if json_dict['swap_test_claibration'] in ['True', 'true']:
+        if json_dict['swap_test_calibration'] in ['True', 'true']:
             y_pred_test_class2, y_pred_test_reg2 = predict(mult_sauron, X_cal=X_test, y_cal=y_test, class_assignment_samples_calibration=class_assignment_samples_test, samples_names_calibration=samples_names_test, class_function=class_function, num_classes=num_classes,
                                                            classes=classes, X_test=X_cal, y_test=y_cal, class_assignment_samples_test=class_assignment_samples_calibration, samples_names_test=samples_names_calibration, minimal_certainty=minimal_certainty, score=score)
     output_regression_test = output_directory + \
@@ -490,7 +490,7 @@ def perform_conformal_prediction(json_dict: json.JSONDecoder):
     y_pred_test_class1.to_csv(
         output_classification_test, sep='\t', index=False)
     y_pred_test_reg1.to_csv(output_regression_test, sep='\t', index=False)
-    if json_dict['swap_test_claibration'] in ['True', 'true']:
+    if json_dict['swap_test_calibration'] in ['True', 'true']:
         output_regression_test = output_directory + \
             name_of_analysis + f'_{minimal_certainty}' + \
             "_regression2_test.txt"
@@ -566,16 +566,18 @@ if __name__ == "__main__":
                     \n g) Should classification errors be included (classification_errors_included, accepted: true, false)\
                     \n h) Training matrix cell line file name (tr_matrix_file)\
                     \n i) Test matrix cell line file name (te_matrix_file)\
-                    \n j) Gene Expression matrix (ge_matrix_file)\
-                    \n k) Classification info file (cl_matrix_file)\
-                    \n l) File with gene names that should be used for analysis (wanted_genes)\
-                    \n m) Number of wanted genes from the sorted list (nr_of_w_genes)\
-                    \n n) Name for the analysis (analysis_name, e.g. Fold0, CompleteTraining, etc.)\
-                    \n o) Threshold(s) for calculating weights (threshold). Can be used with sample weights.\
-                    \n p) Should training data be upsampled for minority class (upsample, accepted: simple, linear). Cannot be combined with sample_weights\
-                    \n q) Should sample weights be used for fitting trees? (sample_weights, accepted: simple, no)\
-                    \n r) Information whether classification or regression trees should be fit (regression_classification, accepted: regression, classification not yet implemented)\
-                    \n s) quantile (a number between 0 and 1, can also be an empty string, then usual RF is fitted)\
-                    \n t) score classification (summation, mondrian, or true_class)")
+                    \n j) Calibration matrix cell line file name (cal_matrix_file)\
+                    \n k) Gene Expression matrix (ge_matrix_file)\
+                    \n l) Classification info file (cl_matrix_file)\
+                    \n m) File with gene names that should be used for analysis (wanted_genes)\
+                    \n n) Number of wanted genes from the sorted list (nr_of_w_genes)\
+                    \n o) Name for the analysis (analysis_name, e.g. Fold0, CompleteTraining, etc.)\
+                    \n p) Threshold(s) for calculating weights (threshold). Can be used with sample weights.\
+                    \n q) Should training data be upsampled for minority class (upsample, accepted: simple, linear). Cannot be combined with sample_weights\
+                    \n r) Should sample weights be used for fitting trees? (sample_weights, accepted: simple, no)\
+                    \n s) Information whether classification or regression trees should be fit (regression_classification, accepted: regression, classification not yet implemented)\
+                    \n t) error rate (a number between 0 and 1, can also be an empty string, then usual RF is fitted)\
+                    \n u) score classification (summation, mondrian, or true_class)\
+                    \n v) Information whether calibration and test set should be swapped (swap_test_calibration)")
     print(sys.argv[1])
     main(sys.argv[1])

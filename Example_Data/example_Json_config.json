@@ -21,5 +21,5 @@
     "error_rate": "0.10",
     "sauron": "True",
     "score_classification": "summation",
-    "swap_test_claibration": "False"
+    "swap_test_calibration": "False"
 }
