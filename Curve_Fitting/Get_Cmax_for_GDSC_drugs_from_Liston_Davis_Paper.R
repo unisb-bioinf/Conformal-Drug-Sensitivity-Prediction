@@ -1,18 +1,18 @@
 # Generate a data frame that contains Cmax values for each GDSC drug where Cmax values are present
 
 # Note: 
-# Files "Liston_Davis_Drug_Concentrations_S1.txt" and "Liston_Davis_Drug_Concentrations_S2.txt" were obtained from 
+# Files "Liston_Davis_Drug_Concentrations_S1.txt" and "Liston_Davis_Drug_Concentrations_S2.txt" were obtained from https://doi.org/10.1158/1078-0432.c.6526332.v1
 # File "screened_compunds_rel_8.2.csv" was downloaded from the GDSC website (https://www.cancerrxgene.org/downloads/bulk_download)
 
 # get concentration data from paper (2 tables)
-concs1 = read.csv("D:/ZBI/NN_RF_Enrichment_Genes/Final_Code_and_Data/Data/Liston_Davis_Drug_Concentrations_S1.txt", sep='\t', check.names = F)
-concs2 = read.csv("D:/ZBI/NN_RF_Enrichment_Genes/Final_Code_and_Data/Data/Liston_Davis_Drug_Concentrations_S2.txt", sep='\t', check.names = F)
+concs1 = read.csv("Liston_Davis_Drug_Concentrations_S1.txt", sep='\t', check.names = F)
+concs2 = read.csv("Liston_Davis_Drug_Concentrations_S2.txt", sep='\t', check.names = F)
 colnames(concs2)[colnames(concs2) == 'Cmax        (uM)'] = 'Cmax (uM)'
 common_cols = c('Generic Name', 'Brand Name', 'Dose', 'Dose Unit', 'Cmax (uM)', 'Cmax (mol/liter)')
 all_concs = rbind(concs1[, common_cols], concs2[, common_cols])
 
 # get screened drugs from GDSC
-screened_GDSC = read.csv("Y:/data/DATASETS/GDSC1000/2020-12-15/Annotation/screened_compunds_rel_8.2.csv")
+screened_GDSC = read.csv("screened_compunds_rel_8.2.csv")
 
 info_frame = data.frame('drug_id_GDSC'=screened_GDSC$DRUG_ID, 'drug_name_GDSC'=screened_GDSC$DRUG_NAME, 'synonyms_GDSC'=screened_GDSC$SYNONYMS, 'Generic Name'=NA, 'Brand Name'=NA, 'Dose'=NA, 'Dose Unit'=NA, 'Cmax (uM)'=NA, 'Cmax (mol/liter)'=NA, check.names=F)
 
