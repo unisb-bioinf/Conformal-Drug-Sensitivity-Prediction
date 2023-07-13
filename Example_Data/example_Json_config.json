@@ -3,7 +3,7 @@
     "samples_per_leaf": 15,
     "number_of_features_per_split": "breiman_default",
     "analysis_mode": "binary_no_weights_sensitive",
-    "output_dir": "./",
+    "output_dir": "<path/to/output_dir>",
     "mse_included": "true",
     "classification_errors_included": "true",
     "tr_matrix_file": "Training_Irinotecan_scores.txt",
