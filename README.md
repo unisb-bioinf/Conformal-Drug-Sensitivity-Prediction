@@ -14,4 +14,4 @@ Example call:
 cd Example_Data/
 python3 ../CP_Pipeline/cp-main.py example_Json_config.json
 ```
-Note that the path to the output folder should be edited in the file `Example_Data/example_JSON_config.json`. The output files 
+Note that the path to the output folder should be edited in the file `Example_Data/example_JSON_config.json`.
