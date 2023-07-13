@@ -9,9 +9,9 @@ The CP framework together with SAURON-RF can be executed as a python3 script in 
 
 used python3 libraries: pandas numpy typing math bisect operator copy sklearn time collections scipy
 
-Example call: 
+After downloading at least the directories `CP_Pipeline`,`Example_Data`, and the file `Advanced_SAURON_RF/multi_class_sauron_rf.py` you can execute the conformal prediction pipeline combined with SAURON RF as follows: 
 ```
 cd Example_Data/
 python3 ../CP_Pipeline/cp-main.py example_Json_config.json
 ```
-Note that the path to the output folder should be edited in the file `Example_Data/example_JSON_config.json`.
+Note that the directory tree should be kept and the path to the output folder should be edited in the file `Example_Data/example_JSON_config.json`. In this folder 10 output files will be generated (12 if the field swap_test_calibration in the config file is set tu 'True'). The conformal prediction results for classification will be found in ```<output_dir>/<analysis_name>_<1-error_rate>_classification_1_test.txt ``` and the regression results are stored in ```<output_dir>/<analysis_name>_<1-error_rate>_regression_1_test.txt```. If if the field swap_test_calibration in the config file is set to 'True' there will be one additional file per task, respectively, where the '1' in the file name is replaced by a '2'.
