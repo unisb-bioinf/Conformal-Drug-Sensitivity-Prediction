@@ -9,7 +9,7 @@ The CP framework together with SAURON-RF can be executed as a python3 script in 
 
 used python3 libraries: pandas numpy typing math bisect operator copy sklearn time collections scipy
 
-Example call: 
+Example call after downloading at least the directories `CP_Pipeline`,`Example_Data` a: 
 ```
 cd Example_Data/
 python3 ../CP_Pipeline/cp-main.py example_Json_config.json
