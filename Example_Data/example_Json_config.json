@@ -14,7 +14,7 @@
     "wanted_genes": "gene_score_list.txt",
     "nr_of_w_genes": 50,
     "analysis_name": "Irinotecan_Sauron",
-    "threshold": "2.31201549666196",
+    "threshold": "0.988664394508609",
     "upsample": "",
     "sample_weights": "simple",
     "regression_classification": "regression",
