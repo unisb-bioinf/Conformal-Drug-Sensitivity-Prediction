@@ -20,6 +20,6 @@
     "regression_classification": "regression",
     "error_rate": "0.10",
     "sauron": "True",
-    "score_classification": "summation",
+    "score_classification": "true_class",
     "swap_test_calibration": "False"
 }
