@@ -1,7 +1,7 @@
 # Conformal Prediction
 This is a conformal prediction (CP) framework, which we developed to perform reliable drug sensitivity prediction and prioritization. A detailed description and application of the framework can be found in [our article 'Reliable anti-cancer drug sensitivity prediction and prioritization'](https://doi.org/10.1038/s41598-024-62956-6). The framework can be used to obtain reliable classification and regression results, also for simultaneous regression and classification approaches like our own [already published approach SAURON-RF](https://www.nature.com/articles/s41598-022-17609-x) that we extended to be eligible for CP. If you use our conformal prediction framework, (extended) SAURON-RF, or the code in this repository, please cite the corresponding publications. There, we also provide detailed mathematical descriptions of the framework including the non-conformity scores we implemented for CP.
 
-For issues and questions, please contact Kerstin Lenhof (klenhof[at]bioinf.uni-sb.de) or Lea Eckhart (lea.eckhart[at]bioinf.uni-sb.de). 
+For issues and questions, please contact Kerstin Lenhof (research[at]klenhof.de) or Lea Eckhart (lea.eckhart[at]uni-saarland.de). 
 
 ## Usage
 
