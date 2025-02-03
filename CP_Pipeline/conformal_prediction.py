@@ -73,8 +73,10 @@ def conformal_prediction(estimator, X_cal: np.array, y_cal: np.array, y_cal_disc
                 # this here is a bit special since we have different lists for the classes
                 q_class = []
                 for class_list in scores_class:
-                    q = np.quantile(
-                        class_list, math.ceil((n+1)*(minimal_certainty))/n)
+                    if len(class_list) == 0:
+                        q = 1 #class was not existing in calibration set, to fulfil cp guarantee, we add class nevertheless
+                    else:
+                        q = np.quantile(class_list, math.ceil((n+1)*(minimal_certainty))/n)
                     # we now have a list of tuples containing the list and the resulting quantile
                     q_class.append((class_list, q))
             else:
@@ -462,4 +464,5 @@ def eval_classification(y_pred: np.array, y_pred_con: np.array, y_test: np.array
         index.append(f'score{class_names[i]}')
     pred = pd.DataFrame(data=data, columns=sample_names,
                         index=index).transpose()
+    pred[f'conformal_prediction_{int(minimal_certainty*100)}_quantile'] = pred[f'conformal_prediction_{int(minimal_certainty*100)}_quantile'].apply(lambda x: [str(element) for element in x])
     return pred

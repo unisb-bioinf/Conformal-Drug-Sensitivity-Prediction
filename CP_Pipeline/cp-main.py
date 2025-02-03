@@ -2,7 +2,8 @@ import numpy as np
 import math
 import sys
 from conformal_prediction import *
-sys.path.append('../')
+
+sys.path.append('/Users/klenhof/Desktop/Marina_sc_SAURON_project/Conformal-Drug-Sensitivity-Prediction/')
 from Advanced_SAURON_RF.multi_class_sauron_rf import SAURONRF
 import json
 
@@ -429,7 +430,7 @@ def perform_conformal_prediction(json_dict: json.JSONDecoder):
 
     error_rate = float(json_dict['error_rate'])
     minimal_certainty = 1-error_rate
-
+    all_available_labels = [str(label) for label in json.loads(json_dict["all_available_labels"])]
     # Fitting is equal for all analysis modes, only predictions differ
     # Therefore, the RF object can be set and built before actual predictions need to be performed
     mult_sauron = SAURONRF(X_train=X_train, y_train=y_train, sample_names_train=samples_names_train,
@@ -444,7 +445,7 @@ def perform_conformal_prediction(json_dict: json.JSONDecoder):
                            upsampling=upsampling, time_file=time_file,
                            sample_weights_included=sample_weights_included,
                            leaf_assignment_file_train=leaf_assignment_file_train,
-                           sample_info_file=sample_info_file, debug_file=debug_file)
+                           sample_info_file=sample_info_file, all_available_labels=all_available_labels, debug_file=debug_file)
 
     mult_sauron.fit()
 

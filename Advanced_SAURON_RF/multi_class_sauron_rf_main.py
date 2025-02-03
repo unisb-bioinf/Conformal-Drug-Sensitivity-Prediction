@@ -256,6 +256,7 @@ def start_multi_rf_method(json_dict):
     elif json_dict["regression_classification"] == "regression":
         if number_of_features_per_split == "breiman_default":
             # number of features Breiman default
+		
             number_of_features_per_split = math.floor(float(X_train.shape[1]) / 3.0)
 
 
@@ -320,7 +321,7 @@ def start_multi_rf_method(json_dict):
     else:
         quantile = float("NaN")
 
-
+    all_available_labels = [str(label) for label in json.loads(json_dict["all_available_labels"])]
     leaf_assignment_file_train = output_directory + name_of_analysis + "_Training_Set_LeafAssignment.txt"
     sample_info_file = output_directory + name_of_analysis + "_Additional_Sample_Information.txt"
     feature_imp_output_file = output_directory + name_of_analysis + "_Feature_Importance.txt"
@@ -341,7 +342,7 @@ def start_multi_rf_method(json_dict):
                                                  upsampling=upsampling, time_file=time_file,
                                                  sample_weights_included=sample_weights_included,
                                                  leaf_assignment_file_train=leaf_assignment_file_train,
-                                                 sample_info_file=sample_info_file, debug_file=debug_file)
+                                                 sample_info_file=sample_info_file, all_available_labels=all_available_labels, debug_file=debug_file)
 
     mult_sauron.fit()
 

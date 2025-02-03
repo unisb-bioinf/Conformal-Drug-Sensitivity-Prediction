@@ -27,7 +27,7 @@ class SAURONRF:
 	'multiclass SAURON-RF implementation, compatible with Conformal Prediction Framework by Lisa-Marie Rolli'
 
 	
-	def __init__(self, X_train, y_train,  sample_names_train, min_number_of_samples_per_leaf, number_of_trees_in_forest, number_of_features_per_split, class_assignment_samples_train,  name_of_analysis, mse_included, classification_included, feature_imp_output_file, feature_names, threshold, upsampling, time_file, sample_weights_included, leaf_assignment_file_train, sample_info_file, debug_file):
+	def __init__(self, X_train, y_train,  sample_names_train, min_number_of_samples_per_leaf, number_of_trees_in_forest, number_of_features_per_split, class_assignment_samples_train,  name_of_analysis, mse_included, classification_included, feature_imp_output_file, feature_names, threshold, upsampling, time_file, sample_weights_included, leaf_assignment_file_train, sample_info_file, all_available_labels, debug_file):
 		self.X_train = X_train
 		self.y_train = y_train
 		self.sample_names_train = sample_names_train
@@ -47,6 +47,7 @@ class SAURONRF:
 		self.leaf_assignment_file_train = leaf_assignment_file_train
 		self.sample_info_file = sample_info_file
 		self.debug_file = debug_file
+		self.all_available_labels = all_available_labels
 
 		print("Your input parameters are: ")
 		#print("Analysis mode: " + self.analysis_mode)
@@ -1552,7 +1553,7 @@ class SAURONRF:
 
 		if X_train_calc:
 			print_prediction_to_file(self.predictions_samples_train, self.final_predictions_samples_train, self.number_of_trees_in_forest, self.original_Xtrain.shape[0], self.output_sample_prediction_file_train, self.original_sample_names_train, self.certainty_samples_train, self.classification_prediction_samples_train, self.class_count)
-			print_error_to_file(self.train_error_file, self.name_of_analysis, ",".join(parameters), self.mse_included, self.classification_included, self.final_predictions_samples_train, self.original_ytrain, self.classification_prediction_samples_train, self.original_class_assignment_samples_train)
+			print_error_to_file(self.train_error_file, self.name_of_analysis, ",".join(parameters), self.mse_included, self.classification_included, self.final_predictions_samples_train, self.original_ytrain, self.classification_prediction_samples_train, self.original_class_assignment_samples_train, self.all_available_labels)
 			print_leaf_purity_per_sample_to_file(self.leaf_purity_samples_train,  self.number_of_trees_in_forest, self.original_Xtrain.shape[0], self.output_leaf_purity_file_train, self.original_sample_names_train)
 			print_leaf_purity_per_sample_to_file(self.leaf_variance_samples_train, self.number_of_trees_in_forest, self.original_Xtrain.shape[0], self.output_variance_file_train, self.original_sample_names_train, "variance")
 
@@ -1561,7 +1562,7 @@ class SAURONRF:
 									X_test.shape[0], self.output_sample_prediction_file_test, sample_names_test, self.certainty_samples_test, self.classification_prediction_samples_test, self.class_count)
 		print_error_to_file(self.test_error_file, self.name_of_analysis, ",".join(parameters), self.mse_included,
 							self.classification_included, self.final_predictions_samples_test, self.y_test,
-							self.classification_prediction_samples_test, self.class_assignment_samples_test)
+							self.classification_prediction_samples_test, self.class_assignment_samples_test, self.all_available_labels)
 		print_leaf_purity_per_sample_to_file(self.leaf_purity_samples_test,  self.number_of_trees_in_forest, X_test.shape[0], self.output_leaf_purity_file_test, sample_names_test)
 		print_leaf_purity_per_sample_to_file(self.leaf_variance_samples_test, self.number_of_trees_in_forest, X_test.shape[0], self.output_variance_file_test, sample_names_test, "variance")
 
@@ -2036,7 +2037,7 @@ def print_leaf_purity_per_sample_to_file(leaf_purity_samples,  number_of_trees, 
 
 def print_error_to_file(filename, name_of_analysis, parameters, mse_included, classification_included,
 						predictions_samples, true_values, classification_prediction_samples,
-						true_classification_samples):
+						true_classification_samples, all_available_labels):
 	output_line = [name_of_analysis, parameters]
 	first_line = ["Name_of_Analysis", "Parameters"]
 
@@ -2060,11 +2061,14 @@ def print_error_to_file(filename, name_of_analysis, parameters, mse_included, cl
 			accuracy = accuracy_score(y_true=true_classification_samples, y_pred=classification_prediction_samples,
 										normalize=True)
 			mcc = matthews_corrcoef(y_true=true_classification_samples, y_pred=classification_prediction_samples)
-
-			if len(set(true_classification_samples)) == 2:
+			#print(all_available_labels)
+			#print(true_classification_samples)
+			if len(all_available_labels) == 2:
+				#print(sorted(list(set(all_available_labels))))
 				confusion_mtx = confusion_matrix(y_true=true_classification_samples,
-												 y_pred=classification_prediction_samples)
-
+												 y_pred=classification_prediction_samples, labels = sorted(list(set(all_available_labels))))
+				#if confusion_mtx.shape == (1, 1):
+				#	print(confusion_mtx)
 				tn = confusion_mtx[0][0]
 				fp = confusion_mtx[0][1]
 				fn = confusion_mtx[1][0]
@@ -2085,8 +2089,7 @@ def print_error_to_file(filename, name_of_analysis, parameters, mse_included, cl
 				first_line.append("Accuracy")
 				first_line.append("MCC")
 			else:
-				possible_classes = sorted(list(set(true_classification_samples)))
-
+				possible_classes = sorted(list(set(all_available_labels)))
 				confusion_mtx = confusion_matrix(y_true=true_classification_samples,
 												 y_pred=classification_prediction_samples, labels=possible_classes)
 
